@@ -1,3 +1,4 @@
-build
-node_modules
 .env
+dist
+package-lock.json
+node_modules

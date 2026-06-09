@@ -1,0 +1,1 @@
+// placeholder: client/openai.ts
