@@ -1,8 +1,13 @@
 import { tavily } from "@tavily/core"
+import dotenv from "dotenv";
 
+// dotenv.config({path:"../../.env"});
 
-async function searchHandler(){
- const tvly = tavily({ apiKey: "tvly-YOUR_API_KEY" });
-const response = await tvly.search("Who is Leo Messi?");
-console.log(response);
+export async function searchHandler(query:string) {
+const key=process.env.TVLY_API_KEY;
+if(!key) throw new Error("TVLY_API_KEY is not defined in environment variables");
+ const tvly = tavily({apiKey:key});
+const response = await tvly.search(query);
+return response;
 }
+ 

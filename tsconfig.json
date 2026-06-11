@@ -37,10 +37,11 @@
     "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
-    "emitDeclarationOnly": false,
+    "emitDeclarationOnly": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+    "allowImportingTsExtensions": true
   }
 }
