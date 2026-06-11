@@ -1,28 +1,14 @@
 // placeholder: client/tools/calculator.ts
-export interface CalculatorSuccess {
-    success: true;
-    result: unknown;
-}
+ 
 
-export interface CalculatorError {
-    success: false;
-    error: string;
-}
-
-export type CalculatorResponse = CalculatorSuccess | CalculatorError;
+export type CalculatorResponse = string
 
 export function calculator(expression: string): CalculatorResponse {
     try {
         const result: unknown = Function(`"use strict"; return (${expression})`)();
-
-        return {
-            success: true,
-            result,
-        };
+         return `result of this expression is :${result}`
     } catch (error) {
-        return {
-            success: false,
-            error: "Invalid expression",
-        };
+        return "Invalid expression"
+           
     }
 }

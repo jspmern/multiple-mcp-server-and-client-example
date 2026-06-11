@@ -1,16 +1,18 @@
 import { calculator } from "./tools/calculator.ts";
-import { searchHandler } from "./tools/weather.ts";
+import { get_weather } from "./tools/weather.ts";
+ 
 
-async function executeToolHandler(toolsName:string,args:any){
+export async function executeToolHandler(toolsName:string,args:any){
+    //console.log("hello i am",toolsName,args)
     switch(toolsName){
         case "calculator":
             //call calculator tool handler
             const calResult=calculator(args.expression);
             return  calResult;
-        case "weather":
+        case "get_weather":
             // call weather tool handler
-            const searchResult= searchHandler(args.query);
-            return searchResult;
+            const searchResult= get_weather(`weather of ${args.city}`);
+            return (await searchResult).results.map((item)=>item.content).join("\n \n");
         default:
             throw new Error(`Tool ${toolsName} not found`);
     }

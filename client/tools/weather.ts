@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 // dotenv.config({path:"../../.env"});
 
-export async function searchHandler(query:string) {
+export async function  get_weather(query:string) {
 const key=process.env.TVLY_API_KEY;
 if(!key) throw new Error("TVLY_API_KEY is not defined in environment variables");
  const tvly = tavily({apiKey:key});
