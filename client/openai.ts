@@ -78,7 +78,7 @@ export async function main() {
         tools: tools
       });
         const aiResponseMessage = response.choices[0]?.message
-      messages.push(aiResponseMessage!)
+          messages.push(aiResponseMessage!)
       
       const lastMessge=messages[messages.length-1]
       const toolcall = (lastMessge as any)?.tool_calls;
@@ -99,13 +99,6 @@ export async function main() {
          return 
       }
        }
-     
-      
-    
-      
-     
-          //console.log(JSON.stringify(messages,null,2))
-      // console.log("toolcall", JSON.stringify(response.choices[0]?.message.tool_calls))
     } catch (err) {
       console.error("Error:", err);
     }
