@@ -95,7 +95,7 @@ export async function main() {
           })
         }
       } else {
-         console.log(messages[messages.length-1]?.content)
+         console.log(`Bot :${messages[messages.length-1]?.content}`)
          return 
       }
        }
