@@ -2,7 +2,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { employees } from "./data/employees.ts";
+import { employees } from "./data/employees.js";
 
 /** this is the server instance */
 const server = new McpServer({

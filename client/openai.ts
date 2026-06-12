@@ -1,8 +1,9 @@
 
 import OpenAI from "openai";
 import readline from "readline";
-import type { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions.mjs";
-import { executeToolHandler } from "./router.ts";
+ 
+import { executeToolHandler } from "./router.js";
+import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
 export const client = new OpenAI();
 //this is the local tool definition, it should be consistent with the tool definition in server side
 export const tools: NonNullable<ChatCompletionCreateParamsBase["tools"]> = [

@@ -1,5 +1,5 @@
-import { calculator } from "./tools/calculator.ts";
-import { get_weather } from "./tools/weather.ts";
+import { calculator } from "./tools/calculator.js";
+import { get_weather } from "./tools/weather.js";
  
 
 export async function executeToolHandler(toolsName:string,args:any){
