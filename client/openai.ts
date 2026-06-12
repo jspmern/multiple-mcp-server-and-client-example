@@ -4,9 +4,10 @@ import readline from "readline";
  
 import { executeToolHandler } from "./router.js";
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
+import { getHrTools } from "./mcp/hrClient.js";
 export const client = new OpenAI();
 //this is the local tool definition, it should be consistent with the tool definition in server side
-export const tools: NonNullable<ChatCompletionCreateParamsBase["tools"]> = [
+export const localTools: NonNullable<ChatCompletionCreateParamsBase["tools"]> = [
   {
     type: "function",
     function: {
@@ -40,22 +41,7 @@ export const tools: NonNullable<ChatCompletionCreateParamsBase["tools"]> = [
       }
     }
   },
-  {
-  type: "function",
-  function: {
-    name: "get_employee_data",
-    description: "Get employee information from HR system",
-    parameters: {
-      type: "object",
-      properties: {
-        limit: {
-          type: "string"
-        }
-      },
-      required: ["limit"]
-    }
-  }
-}
+ 
 ];
 
 
@@ -90,10 +76,12 @@ export async function main() {
        while(true)
        {
          /**Invoking the LLM Modal */
+         /**Get all Hr tools form hr-mcp-client */
+         const hrTools = await getHrTools() as ChatCompletionCreateParamsBase["tools"] | undefined;
       const response = await client.chat.completions.create({
         model: "gpt-5.5",
         messages,
-        tools: tools
+        tools: [...localTools, ...(hrTools ?? [])]
       });
         const aiResponseMessage = response.choices[0]?.message
           messages.push(aiResponseMessage!)

@@ -22,27 +22,17 @@ export async function connectHrServer() {
     console.error("Connected to HR MCP Server");
 }  
 
-export async function getAllTools() {
-    const response: any = await mcpClient.listTools();
-    const hrTools = response.tools?.map((item: any) => {
-        return {
-            type: "function",
-            function: {
-                name: item.name,
-                description: item.description,
-                parameters: {
-                    type: "object",
-                    properties: {
-                        limit: {
-                            type: "string"
-                        }
-                    },
-                    required: ["limit"]
-                }
-            }
-        }
-    }) ?? [];
-    console.log('hello i am hrTools', JSON.stringify(hrTools, null, 2))
+export async function getHrTools() {
+  const response = await mcpClient.listTools();
+
+  return response.tools.map((tool: any) => ({
+    type: "function",
+    function: {
+      name: tool.name,
+      description: tool.description,
+      parameters: tool.inputSchema
+    }
+  }));
 }
 /**this is for mcp tool execution */
 export async function getEmployeeData(limit: string) {
