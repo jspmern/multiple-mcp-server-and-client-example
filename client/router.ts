@@ -1,18 +1,24 @@
+import { getEmployeeData } from "./mcp/hrClient.js";
 import { calculator } from "./tools/calculator.js";
 import { get_weather } from "./tools/weather.js";
- 
 
-export async function executeToolHandler(toolsName:string,args:any){
+
+export async function executeToolHandler(toolsName: string, args: any) {
     //console.log("hello i am",toolsName,args)
-    switch(toolsName){
+    switch (toolsName) {
         case "calculator":
             //call calculator tool handler
-            const calResult=calculator(args.expression);
-            return  calResult;
+            const calResult = calculator(args.expression);
+            return calResult;
         case "get_weather":
             // call weather tool handler
-            const searchResult= get_weather(`weather of ${args.city}`);
-            return (await searchResult).results.map((item)=>item.content).join("\n \n");
+            const searchResult = get_weather(`weather of ${args.city}`);
+            return (await searchResult).results.map((item) => item.content).join("\n \n");
+        case "get_employee_data":
+
+            const result = await getEmployeeData(args.limit) as { content: { text: string }[] };
+
+            return result.content[0].text;
         default:
             throw new Error(`Tool ${toolsName} not found`);
     }

@@ -39,7 +39,23 @@ export const tools: NonNullable<ChatCompletionCreateParamsBase["tools"]> = [
         required: ["city"]
       }
     }
+  },
+  {
+  type: "function",
+  function: {
+    name: "get_employee_data",
+    description: "Get employee information from HR system",
+    parameters: {
+      type: "object",
+      properties: {
+        limit: {
+          type: "string"
+        }
+      },
+      required: ["limit"]
+    }
   }
+}
 ];
 
 
@@ -52,8 +68,9 @@ let messages: ChatCompletionCreateParamsBase["messages"] = [
 ];
 
 /** this is for asking question from cli  */
+ const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 async function ask(question: string) {
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+ 
   return new Promise<string>((resolve) => rl.question(question, ans => { rl.close(); resolve(ans); }));
 }
 
@@ -61,7 +78,7 @@ export async function main() {
   while (true) {
     const userIn = (await ask("You: ")).trim();
     if (userIn.toLowerCase() === "bye") {
-      console.log("Terminated.");
+      console.error("Terminated.");
       process.exit(0);
     }
     
@@ -96,7 +113,9 @@ export async function main() {
           })
         }
       } else {
-         console.log(`Bot :${messages[messages.length-1]?.content}`)
+         console.error(`Bot :${messages[messages.length-1]?.content}`)
+         rl.close()
+         process.exit(0)
          return 
       }
        }
