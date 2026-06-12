@@ -101,8 +101,7 @@ export async function main() {
       const lastMessge=messages[messages.length-1]
       const toolcall = (lastMessge as any)?.tool_calls;
       if (toolcall && toolcall.length > 0) {
-        for (let tool of toolcall) {
-          //console.log('hello inside loop', tool)
+        for (let tool of toolcall) { 
           const isToolType = tool.type
           if (!(isToolType === "function")) return
           const toolResult = await executeToolHandler(tool.function.name, JSON.parse(tool.function.arguments))
