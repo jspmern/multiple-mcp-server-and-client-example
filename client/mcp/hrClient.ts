@@ -35,11 +35,12 @@ export async function getHrTools() {
   }));
 }
 /**this is for mcp tool execution */
-export async function getEmployeeData(limit: string) {
-    return await mcpClient.callTool({
-        name: "get_all_emp_data",
-        arguments: {
-            limit,
-        },
-    });
+export async function executeHrTool(
+  toolName: string,
+  args: Record<string, any>
+) {
+  return await mcpClient.callTool({
+    name: toolName,
+    arguments: args,
+  });
 }
