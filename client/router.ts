@@ -1,5 +1,6 @@
 
 import { executeHrTool } from "./mcp/hrClient.js";
+import { executeStudentTool } from "./mcp/studentClient.js";
 import { calculator } from "./tools/calculator.js";
 import { get_weather } from "./tools/weather.js";
 
@@ -19,6 +20,10 @@ export async function executeToolHandler(toolsName: string, args: any) {
 
             const result = await executeHrTool(toolsName,args) as { content: { text: string }[] };
             return result.content[0].text;
+            case "create_student_deatils":
+
+            const resultStu = await executeStudentTool(toolsName,args) as { content: { text: string }[] };
+            return resultStu.content[0].text;
         default:
             throw new Error(`Tool ${toolsName} not found`);
     }
