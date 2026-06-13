@@ -12,7 +12,14 @@ export async function connectStudentServer() {
     });
 
     /**Transport for mcp client */
-    const transport = new StreamableHTTPClientTransport(new URL("http://localhost:3001/mcp"))
+    const transport = new StreamableHTTPClientTransport(new URL("http://localhost:3001/mcp"), {
+     requestInit: {
+       headers: {
+         Authorization:
+           `Bearer ${process.env.JWT_TOKEN}`
+       }
+     }
+   })
 
     await mcpClient.connect(transport);
 

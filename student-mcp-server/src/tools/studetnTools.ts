@@ -1,7 +1,20 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import z from "zod";
 import { Student } from "../models/studentModel";
-export function createServer() {
+function canCreateStudent(
+    role: string
+) {
+
+    return [
+        "ADMIN",
+        "TEACHER"
+    ].includes(role);
+}
+export function createServer(user: {
+    userId: string;
+    email: string;
+    role: string;
+}) {
     // Create server instance
     const server = new McpServer({
         name: "student-mcp-server",
@@ -21,10 +34,21 @@ export function createServer() {
 
             },
         },
-        async ({ id=new Date().getMilliseconds(), name, email, marks, department }) => {
-            const studentData =new Student({ id, name, email, marks, department })
-             const newStudent=   await studentData.save();
-            console.log('inserted student in db',newStudent)
+        async ({ id = new Date().getMilliseconds(), name, email, marks, department }) => {
+            const studentData = new Student({ id, name, email, marks, department })
+            if (
+                !canCreateStudent(
+                    user.role
+                )
+            ) {
+
+                throw new Error(
+                    "Forbidden"
+                );
+
+            }
+            const newStudent = await studentData.save();
+            console.log('inserted student in db', newStudent)
             return {
                 content: [
                     {
