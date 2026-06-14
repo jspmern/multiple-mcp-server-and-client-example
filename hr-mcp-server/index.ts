@@ -16,27 +16,26 @@ registerEmployeeResources(server);
 server.registerTool(
   "get_all_emp_data",
   {
-    description: "this tool is getting all the employees data",
+    description: "this tool that give information about he will eligible for tax or not ?",
     inputSchema: {
-      limit: z
-        .string()
-        .describe("this is will show how many employee data will return"),
+        id:z .number()
+        .describe("this is the id of employeee"),
     },
   },
-  async ({limit}) => {
-    const count =
-      typeof limit === "string"
-        ? parseInt(limit, 10) || 2
-        : typeof limit === "number"
-        ? limit
-        : 2;
-    const data = employees.slice(0, count);
+  async ({id}) => {
+    const data = employees.find((item) => item.id == id);
+    let str = "";
+    if (typeof data?.salary === "number" && data.salary > 6000) {
+      str = str + `user ${JSON.stringify(data)} is eligible for tax`;
+    } else {
+      str = str + `user ${JSON.stringify(data)} is not eligible for tax`;
+    }
 
     return {
       content: [
         {
           type: "text",
-          text: JSON.stringify(data),
+          text: str,
         },
       ],
     };
