@@ -44,3 +44,15 @@ export async function executeHrTool(
     arguments: args,
   });
 }
+
+export async function getHrResources() {
+  return await mcpClient.listResources();
+}
+
+export async function readHrResource(
+  uri: string
+) {
+  return await mcpClient.readResource({
+    uri
+  });
+}

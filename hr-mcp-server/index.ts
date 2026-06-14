@@ -3,13 +3,15 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { employees } from "./data/employees.js";
+import { registerEmployeeResources }
+from "./resource/employees-resource.js";
 
 /** this is the server instance */
 const server = new McpServer({
   name: "'hr-mcp-server",
   version: "1.0.0",
 });
-
+registerEmployeeResources(server);
 /**Adding the tool here later i can move to seprate file */
 server.registerTool(
   "get_all_emp_data",

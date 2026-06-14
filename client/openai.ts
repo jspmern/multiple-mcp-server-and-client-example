@@ -42,6 +42,28 @@ export const localTools: NonNullable<ChatCompletionCreateParamsBase["tools"]> = 
       }
     }
   },
+  {
+  type: "function",
+  function: {
+    name: "read_resource",
+    description:
+      "Read MCP resources",
+
+    parameters: {
+      type: "object",
+
+      properties: {
+        uri: {
+          type: "string",
+          description:
+            "Resource URI"
+        }
+      },
+
+      required: ["uri"]
+    }
+  }
+}
  
 ];
 
@@ -50,7 +72,19 @@ export const localTools: NonNullable<ChatCompletionCreateParamsBase["tools"]> = 
 let messages: ChatCompletionCreateParamsBase["messages"] = [
   {
     role: 'system',
-    content: "you are smart asssistance your name is UtsavBOt"
+    content: `
+You are smart assistant.
+
+Available Resource:
+
+employee://all
+
+Use read_resource
+when user wants employee data.
+
+Use tools only when user wants
+to perform actions.
+`
   }
 ];
 
